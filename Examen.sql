@@ -1,0 +1,44 @@
+
+CREATE TABLE SALARIES (ID            NUMBER (*,0) PRIMARY KEY 
+                      ,EMPLOYEE_ID   NUMBER (*,0) NOT NULL 
+                      ,PROJECT_ID    NUMBER (*,0)
+                      ,SALARY        NUMBER (10,2) NOT NULL)
+
+--Restriccion en campo salario
+ ALTER TABLE SALARIES
+ ADD CONSTRAINT SALARY
+ CHECK (SALARY>500);
+                      
+CREATE TABLE EMPLOYEES (ID              NUMBER (*,0) PRIMARY KEY 
+                       ,MANAGER_ID      NUMBER (*,0)
+                       ,DATE_OF_JOINING DATE NOT NULL
+                       ,FULL_NAME       VARCHAR2(255 BYTE) NOT NULL)
+
+CREATE TABLE PROJECTS (ID                NUMBER (*,0) PRIMARY KEY 
+                      ,CODE              VARCHAR2(255 BYTE) NOT NULL
+                      ,MANAGER_ID        NUMBER (*,0)
+                      ,BUDGET            NUMBER (10,2) NOT NULL
+                      ,DATE_OF_BEGINNING DATE
+                      ,DATE_OF_ENDING    DATE)
+
+--Claves Foráneas 
+ALTER TABLE SALARIES
+ADD FOREIGN KEY (EMPLOYEE_ID)
+REFERENCES EMPLOYEES(ID);
+
+ALTER TABLE SALARIES
+ADD FOREIGN KEY (PROJECT_ID)
+REFERENCES PROJECTS(ID);
+
+ALTER TABLE PROJECTS
+ADD FOREIGN KEY (MANAGER_ID)
+REFERENCES EMPLOYEES(ID);
+
+ALTER TABLE EMPLOYEES
+ADD FOREIGN KEY (MANAGER_ID)
+REFERENCES EMPLOYEES(ID);
+
+
+SELECT * FROM EMPLOYEES;
+SELECT * FROM PROJECTS;
+SELECT * FROM SALARIES;
